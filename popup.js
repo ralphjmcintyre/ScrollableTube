@@ -9,10 +9,7 @@ chrome.storage.local.get('enabled', data => {
 });
 
 chrome.storage.local.get('size', data => {
-    if (data.size) {
-        sizeInput.value = data.size
-        return;
-    }
+    sizeInput.value = data.size ?? null;
     chrome.storage.local.set({
         size: sizeInput.value
     });

@@ -7,3 +7,25 @@
 //         );
 //     }
 // );
+
+chrome.tabs.onUpdated.addListener(() => {
+  chrome.storage.local.get('enabled', data => {
+    chrome.tabs.sendMessage(info.tabId, {
+      message: data
+    });
+  })
+})
+  
+chrome.tabs.onActivated.addListener(() => {
+  chrome.storage.local.get('enabled', data => {
+    chrome.tabs.sendMessage(info.tabId, {
+      message: data
+    });
+  })
+})
+
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+  if (msg.message === UPDATE_BACKGROUND_DATA) {
+    // update background vars
+  }
+})

@@ -8,11 +8,12 @@
         "default_popup": "popup.html"
     },
     "background": {
-        "scripts": ["background.js"]
+        "scripts": ["background.js"],
+        "persistent": false
     },
     "content_scripts": [
         {
-            "matches": ["https://www.youtube.com/watch?v=*", "https://youtube.com/watch?v=*", "http://*/*", "https://*/*"],
+            "matches": ["https://www.youtube.com/watch*", "https://youtube.com/watch*"],
             "js": ["content.js"],
             "run_at": "document_end"
         }
