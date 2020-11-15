@@ -1,38 +1,20 @@
-var enabled = false; //disabled by default
-var myButton = document.getElementById('toggle');
-var sizeInput = document.getElementById('size');
-var timeout = null;
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-chrome.storage.local.get('enabled', data => {
-    enabled = !!data.enabled;
-    myButton.textContent = enabled ? 'Disable' : 'Enable';
+'use strict';
+
+let changeHeight = document.getElementById('changeHeight');
+
+chrome.storage.sync.get('height', function(data) {
+  changeHeight.setAttribute('value', data.height);
 });
 
-chrome.storage.local.get('size', data => {
-    sizeInput.value = data.size ?? null;
-    chrome.storage.local.set({
-        size: sizeInput.value
-    });
-})
-
-sizeInput.addEventListener('keyup', function (e) {
-    clearTimeout(timeout);
-
-    timeout = setTimeout(function() {
-        chrome.storage.local.set({
-            size: sizeInput.value
-        });
-        chrome.tabs.executeScript({
-            file: 'content.js'
-        });
-    }, 1000);
-});
-
-myButton.addEventListener('click', function() {
-    enabled = !enabled;
-    myButton.textContent = enabled ? 'Disable' : 'Enable';
-    chrome.storage.local.set({enabled:enabled});
-    chrome.tabs.executeScript({
-        file: 'content.js'
-    });
-})
+changeHeight.onclick = function(element) {
+  let height = element.target.value;
+  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+    chrome.tabs.executeScript(
+        tabs[0].id,
+        {code: 'document.getElementById("related").style.height = "' + height + 'px"; document.getElementById("related").style.overflowY = "auto";'});
+  });
+};

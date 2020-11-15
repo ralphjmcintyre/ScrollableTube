@@ -1,31 +1,24 @@
-// chrome.browserAction.onClicked.addListener(
-//     function(tab) {
-//         chrome.tabs.executeScript(tab.id,
-//             {
-//                 "file": "content.js"
-//             }
-//         );
-//     }
-// );
+// Copyright 2018 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
 
-chrome.tabs.onUpdated.addListener(() => {
-  chrome.storage.local.get('enabled', data => {
-    chrome.tabs.sendMessage(info.tabId, {
-      message: data
-    });
-  })
-})
-  
-chrome.tabs.onActivated.addListener(() => {
-  chrome.storage.local.get('enabled', data => {
-    chrome.tabs.sendMessage(info.tabId, {
-      message: data
-    });
-  })
-})
+'use strict';
 
-chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-  if (msg.message === UPDATE_BACKGROUND_DATA) {
-    // update background vars
-  }
-})
+chrome.runtime.onInstalled.addListener(function() {
+  chrome.storage.sync.set({height: 480}, function() {
+    console.log('The height is 480.');
+  });
+  chrome.declarativeContent.onPageChanged.removeRules(undefined, function() {
+    chrome.declarativeContent.onPageChanged.addRules([{
+      conditions: [
+        new chrome.declarativeContent.PageStateMatcher({
+          pageUrl: {hostEquals: 'youtube.com/watch*'},
+        }),
+        new chrome.declarativeContent.PageStateMatcher({
+          css: ["video"]
+        })
+      ],
+      actions: [new chrome.declarativeContent.ShowPageAction()]
+    }]);
+  });
+});

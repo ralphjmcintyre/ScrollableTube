@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
-  <head></head>
-  <body style="text-align: center;">
-    <h2>ScrollableTube</h2>
-    <h4>Make the "Up next" video list scrollable!</h4>
-    <button style="border: none; border-radius: 8px; padding: 8px; text-decoration: none; color: white; background: #303030;" id="toggle"></button>
-    <p>
-      <label for="size">Set custom height (px)</label>
-      <input style="margin-bottom: 4px;" id="size" type="number" />
-      <i>Leave blank for default value.</i>
-    </p>
+  <head>
+    <style>
+      button {
+        height: 30px;
+        width: 30px;
+        outline: none;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="changeHeight"></button>
     <script src="popup.js"></script>
   </body>
 </html>
