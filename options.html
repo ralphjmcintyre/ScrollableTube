@@ -3,8 +3,6 @@
   <head>
     <style>
       button {
-        height: 30px;
-        width: 30px;
         outline: none;
         margin: 10px;
       }
@@ -14,7 +12,13 @@
     <div id="buttonDiv">
     </div>
     <div>
-      <p>Choose a different background color!</p>
+      <p>Use default height</p>
+      <input type="checkbox" id="defaultHeight" />
+    </div>
+    <div>
+      <p>Set a custom height</p>
+      <input type="input" id="customHeight" />
+      <button id="saveCustomHeight">Save</button>
     </div>
   </body>
   <script src="options.js"></script>

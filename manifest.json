@@ -3,7 +3,10 @@
   "version": "1.0",
   "description": "ScrollableTube for YouTube makes the 'Up Next' video list, scrollable so you don't lose sight of your video!",
   "permissions": ["activeTab", "declarativeContent", "storage"],
-  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
   "background": {
     "scripts": ["background.js"],
     "persistent": false
